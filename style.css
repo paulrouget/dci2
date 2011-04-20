@@ -1,0 +1,103 @@
+#player {
+    background: #FAE50B;
+    background: -moz-linear-gradient(top, #FAE50B, #EE9E00);
+    background: -webkit-linear-gradient(top, #FAE50B, #EE9E00);
+    box-shadow: 0 0 20px 10px black;
+    width: 360px;
+    height: 700px;
+    position: relative;
+    display: block;
+    margin: auto;
+    border-radius: 3px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+
+#mirrorVideo {
+    -moz-transform: rotate(90deg);
+    -moz-transform-origin: top left;
+    -webkit-transform: rotate(90deg);
+    -webkit-transform-origin: top left;
+    -o-transform: rotate(90deg);
+    -o-transform-origin: top left;
+    -ms-transform: rotate(90deg);
+    -ms-transform-origin: top left;
+    transform: rotate(90deg);
+    transform-origin: top left;
+    margin-left: 360px;
+    width: 600px; height: 360px;
+}
+
+/* player buttons */
+circle { stroke: #FAE50B; stroke-width: 5px; fill-opacity: 0; }
+path { fill: #FAE50B; stroke: #FAE50B; }
+#stopButton path { stroke-width: 10px; }
+#playButton[play="true"] { display:none; }
+#stopButton { display:none; opacity: 0.3; }
+#stopButton[play="true"] { display: block; }
+svg { position: absolute; top: 450px; left: 150px; cursor: pointer; }
+#stopButton:hover { opacity: 1; }
+#playButton:hover circle { stroke-width: 10; }
+
+/* Patterns */
+#patterns {
+    width: 105px;
+    position: absolute;
+    left: 50%;
+    margin-left: 240px;
+    background: #FAE50B;
+    border-radius: 3px;
+    background: -moz-linear-gradient(top, #FAE50B, #EE9E00);
+    background: -webkit-linear-gradient(top, #FAE50B, #EE9E00);
+    box-shadow: 0 0 20px 10px black;
+    padding: 10px;
+}
+#patterns > div > input { width: 90px;}
+#patterns > div > button {width: 95px;}
+#patterns > div > input, #patterns > div > button {
+    height: 24px;
+    position: absolute;
+    bottom: 0; left: 0;
+    opacity: 0;
+    -moz-transition: 0.5s;
+}
+#patterns > div:hover > button,
+#patterns > div:hover > input {
+    opacity: 1;
+}
+
+#patterns > * {
+    position: relative;
+    width: 95px; height: 95px;
+    display: inline-block;
+    margin: 3px;
+    border: 3px solid black;
+    -moz-transition: 0.5s;
+    cursor: pointer;
+    background-color: black;
+}
+#patterns > div > * { width: 95px; height: 95px; }
+
+*[pattern="true"] {border: 3px solid #F06!important;}
+#pong { background: white; }
+#video { display: none; }
+
+body {
+    background-color: #261C21;
+    color: #FAE50B;
+    font-family: 'Cantarell', monospace;
+    padding-top: 20px;
+}
+
+
+h1 {
+    font-weight: 900;
+    vertical-align: middle;
+    font-size: 1.55em;
+    line-height: 1.6em;
+    background-color: #261C21;
+    color: #FAE50B;
+}
+
+
