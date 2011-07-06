@@ -1,5 +1,7 @@
 const PI4 = 0.785398;
 
+/* Ugly code from when I was young */
+
 var processor = {
   doLoad: function() {
     this.displayBackground = true;
@@ -10,7 +12,9 @@ var processor = {
     // Update the text while typing for the "your text" pattern
     var message = document.getElementById("message");
     message.value = "foobar";
-    message.addEventListener("keyup", this.updateText, true);
+    message.addEventListener("keyup", function() {
+      this.updateText();
+    }, true);
     this.updateText();
 
     // Init the "your drawing" pattern
@@ -21,22 +25,23 @@ var processor = {
     this.oldShape2 = null;
 
     // Set the events listeners for the main video (update button)
-    this.video.addEventListener("pause", function() { self.updateButtons(false); }, false);
-    this.pageLoaded = true;
-    this.startPlayer();
+    this.video.addEventListener("pause", function() {
+      self.updateButtons(false);
+    }, false);
 
-    this.playVideo();
+    this.pageLoaded = true;
+
+    this.updateButtons(false);
+
+    this.drawPlayer();
+    this.computeFrame();
+    this.updateButtons(false);
   },
   videoIsPlaying: function() {
       this.updateButtons(true);
       this.timerCallback();
   },
-  videoIsReady: function() {
-    this.videoLoaded = true;
-    this.startPlayer();
-  },
-  startPlayer: function() {
-    if (!this.videoLoaded || !this.pageLoaded) return;
+  drawPlayer: function() {
     this.width = this.video.videoWidth;
     this.height = this.video.videoHeight;
     this.mirrorVideo.width = this.width;
@@ -44,6 +49,15 @@ var processor = {
     this.mirrorVideoCtx = this.mirrorVideo.getContext("2d");
     this.mirrorVideoCtx.fillStyle = "white";
     this.mirrorVideoCtx.strokeStyle = "black";
+  },
+  // Videos control
+  playVideo: function() {
+    this.video.play();
+    this.videoIsPlaying();
+  },
+  stopVideo: function() {
+    this.video.pause();
+    clearTimeout(this.timeout);
   },
 
   // Handle the click on patterns
@@ -61,15 +75,6 @@ var processor = {
         elt.play();
     } catch(e){};
   },
-  // Videos control
-  playVideo: function() {
-    this.video.play();
-    this.videoIsPlaying();
-  },
-  stopVideo: function() {
-    this.video.pause();
-    clearTimeout(this.timeout);
-  },
   // Main loop
   timerCallback: function() {
     if (this.video.paused || this.video.ended) {
@@ -77,18 +82,16 @@ var processor = {
     }
     this.computeFrame();
     var self = this;
-    /*
-    this.timeout = setTimeout(function () {
-        self.timerCallback();
-      }, 50);
-      */
     window.requestAnimFrame(function() { self.timerCallback(); });
   },
 
   // Update the SVG button
   updateButtons: function(play) {
-    document.getElementById("playButton").setAttribute("play", play);
-    document.getElementById("stopButton").setAttribute("play", play);
+    if (play) {
+      document.body.classList.add("playing");
+    } else {
+      document.body.classList.remove("playing");
+    }
   },
   // Handling some patterns (text, drawing)
   updateText: function() {
@@ -132,7 +135,6 @@ var processor = {
       if (!drawing) return;
       var x = e.clientX - elt.parentNode.parentNode.offsetLeft - elt.parentNode.offsetLeft + window.pageXOffset;
       var y = e.clientY - elt.parentNode.parentNode.offsetTop  - elt.parentNode.offsetTop + window.pageYOffset;
-      console.log(x);
 
       x = x * 1.5;
       y = y * 1.5;

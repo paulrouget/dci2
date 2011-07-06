@@ -33,9 +33,9 @@
 circle { stroke: #FAE50B; stroke-width: 5px; fill-opacity: 0; }
 path { fill: #FAE50B; stroke: #FAE50B; }
 #stopButton path { stroke-width: 10px; }
-#playButton[play="true"] { display:none; }
+body.playing #playButton { display:none; }
 #stopButton { display:none; opacity: 0.3; }
-#stopButton[play="true"] { display: block; }
+body.playing #stopButton { display: block; }
 svg { position: absolute; top: 450px; left: 150px; cursor: pointer; }
 #stopButton:hover { opacity: 1; }
 #playButton:hover circle { stroke-width: 10; }
@@ -88,6 +88,7 @@ body {
     color: #FAE50B;
     font-family: 'Cantarell', monospace;
     padding-top: 20px;
+    overflow: hidden;
 }
 
 
